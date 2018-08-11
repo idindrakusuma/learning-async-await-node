@@ -58,9 +58,24 @@ const users = [{
         })
   }
 
+  /* get status with async await */
+  const getStatusAsync = async (userId) => {
+      const user = await getUser(userId);
+      const grades = await getGrades(user.schoolId);
+      
+      let average = 0;
+      if(grades.length > 0) {
+          average = grades.map((grade) => grade.grade).reduce((a, b) => a + b) / grades.length;
+      }
+      
+      return `${user.name} has a ${average}% in the class.`
+  }
 
-  getStatus(199).then(res => {
-      console.log(res)
-  }).catch(err => {
-      console.log(err)
-  })
+  getStatusAsync(1).then(res => console.log(res)).catch(err => console.log(err))
+
+
+//   getStatus(199).then(res => {
+//       console.log(res)
+//   }).catch(err => {
+//       console.log(err)
+//   })
